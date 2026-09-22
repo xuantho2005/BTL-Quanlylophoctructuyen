@@ -1,0 +1,66 @@
+@model OnlineClassManagement.Models.Assignment
+
+@{
+    ViewData["Title"] = "Chi tiết bài tập";
+}
+
+<h1>@Model.Title</h1>
+<h4>Lớp: @Model.Class.ClassName</h4>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-3">Mô tả</dt>
+        <dd class = "col-sm-9">@Html.DisplayFor(model => model.Description)</dd>
+        
+        <dt class = "col-sm-3">Hướng dẫn</dt>
+        <dd class = "col-sm-9">@Html.DisplayFor(model => model.Instructions)</dd>
+        
+        <dt class = "col-sm-3">Hạn nộp</dt>
+        <dd class = "col-sm-9">@Model.DueDate.ToString("dd/MM/yyyy HH:mm")</dd>
+        
+        <dt class = "col-sm-3">Điểm tối đa</dt>
+        <dd class = "col-sm-9">@Html.DisplayFor(model => model.MaxScore)</dd>
+        
+        <dt class = "col-sm-3">Loại bài tập</dt>
+        <dd class = "col-sm-9">@Html.DisplayFor(model => model.AssignmentType)</dd>
+        
+        <dt class = "col-sm-3">Cho phép nộp muộn</dt>
+        <dd class = "col-sm-9">@(Model.AllowLateSubmission ? "Có" : "Không")</dd>
+        
+        <dt class = "col-sm-3">Trạng thái</dt>
+        <dd class = "col-sm-9">@(Model.IsPublished ? "Đã xuất bản" : "Bản nháp")</dd>
+        
+        <dt class = "col-sm-3">Cập nhật lần cuối</dt>
+        <dd class = "col-sm-9">@Model.UpdatedAt.ToString("dd/MM/yyyy HH:mm")</dd>
+    </dl>
+</div>
+<hr />
+
+<h3>Tình trạng nộp bài</h3>
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-9">
+                <h5 class="card-title">Tóm tắt</h5>
+                <p class="card-text">
+                    Đã có <strong>@ViewBag.SubmittedCount</strong> 
+                    trên tổng số <strong>@ViewBag.TotalStudents</strong> 
+                    học viên nộp bài.
+                </p>
+            </div>
+            <div class="col-md-3 d-flex align-items-center justify-content-end">
+                <a asp-controller="Submissions" 
+                   asp-action="Index" 
+                   asp-route-assignmentId="@Model.AssignmentId" 
+                   class="btn btn-primary">
+                    Đi đến trang chấm điểm
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.AssignmentId" class="btn btn-outline-primary">Sửa bài tập</a> |
+    <a asp-action="Index" asp-route-classId="@Model.ClassId" class="btn btn-secondary">Quay lại danh sách</a>
+</div>

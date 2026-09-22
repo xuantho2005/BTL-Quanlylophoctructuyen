@@ -1,0 +1,46 @@
+@model IEnumerable<OnlineClassManagement.Models.User>
+
+@{
+    ViewData["Title"] = "Danh sách Học viên";
+    // (ViewBag.ClassId và ViewBag.ClassName đã được Controller gửi)
+}
+
+@await Html.PartialAsync("_ClassDashboardNav")
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Chưa có học viên nào đăng ký lớp học này.</div>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Họ và tên</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th>Ngày tham gia</th>
+                <th>Trạng thái</th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var student in Model) {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => student.FullName)</td>
+                <td>@Html.DisplayFor(modelItem => student.Email)</td>
+                <td>@Html.DisplayFor(modelItem => student.PhoneNumber)</td>
+                <td>@student.CreatedAt.ToString("dd/MM/yyyy")</td>
+                <td>
+                    @if(student.IsActive)
+                    {
+                        <span class="badge bg-success">Hoạt động</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Bị khóa</span>
+                    }
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+}

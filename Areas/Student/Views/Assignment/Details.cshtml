@@ -1,0 +1,240 @@
+@model OnlineClassManagement.Models.Assignment
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+
+@{ 
+    ViewData["Title"] = "Nộp bài tập";
+    var submission = ViewBag.Submission as OnlineClassManagement.Models.Submission;
+    var requestToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+}
+
+<h1>@Model.Title</h1>
+
+<div id="ajax-status-container"></div>
+
+<div>
+    <h4>Bài tập</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DueDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DueDate)
+        </dd>
+    </dl>
+</div>
+
+<div id="submission-section">
+@if (submission != null)
+{
+    <div>
+        <h4>Bài nộp của bạn</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                Nộp lúc
+            </dt>
+            <dd class="col-sm-10" id="submitted-at">
+                @submission.SubmittedAt.ToString("dd/MM/yyyy HH:mm")
+            </dd>
+            <dt class="col-sm-2">
+                Tệp đã nộp
+            </dt>
+            <dd class="col-sm-10" id="submitted-file">
+                <a asp-action="ViewSubmissionFile" asp-controller="Assignment" asp-route-submissionId="@submission.SubmissionId">@submission.OriginalFileName</a>
+            </dd>
+        </dl>
+        <button class="btn btn-warning btn-sm" id="re-submit-btn">Nộp lại bài</button>
+    </div>
+}
+else
+{
+    <div>
+        <h4>Nộp bài</h4>
+        <hr />
+        <form id="submit-form" enctype="multipart/form-data">
+            <input type="hidden" name="assignmentId" value="@Model.AssignmentId" />
+            <div class="form-group mb-3">
+                <label for="file">Chọn tệp</label>
+                <input type="file" name="file" id="file-input" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-primary" id="submit-btn">Nộp bài</button>
+        </form>
+    </div>
+}
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const submitForm = document.getElementById('submit-form');
+            const fileInput = document.getElementById('file-input');
+            const submitBtn = document.getElementById('submit-btn');
+            const reSubmitBtn = document.getElementById('re-submit-btn');
+            const statusContainer = document.getElementById('ajax-status-container');
+            const submissionSection = document.getElementById('submission-section');
+            const submitUrl = '@Url.Action("Submit", "Assignment", new { area = "Student" })';
+
+            function showAlert(message, isSuccess) {
+                statusContainer.innerHTML = '';
+                const alertDiv = document.createElement('div');
+                alertDiv.className = `alert ${isSuccess ? 'alert-success' : 'alert-danger'} alert-dismissible fade show`;
+                alertDiv.setAttribute('role', 'alert');
+                alertDiv.innerHTML = `
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                statusContainer.appendChild(alertDiv);
+                setTimeout(() => {
+                    alertDiv.classList.remove('show');
+                    setTimeout(() => alertDiv.remove(), 150);
+                }, 3000);
+            }
+
+            function submitFile(formData) {
+                if (submitBtn) submitBtn.disabled = true;
+                if (submitBtn) submitBtn.textContent = 'Đang nộp...';
+
+                fetch(submitUrl, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'RequestVerificationToken': '@requestToken'
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showAlert(data.message, true);
+                        
+                        // Cập nhật UI
+                        submissionSection.innerHTML = `
+                            <div>
+                                <h4>Bài nộp của bạn</h4>
+                                <hr />
+                                <dl class="row">
+                                    <dt class="col-sm-2">Nộp lúc</dt>
+                                    <dd class="col-sm-10">${data.submission.submittedAt}</dd>
+                                    <dt class="col-sm-2">Tệp đã nộp</dt>
+                                    <dd class="col-sm-10">${data.submission.fileName}</dd>
+                                </dl>
+                                <button class="btn btn-warning btn-sm" id="re-submit-btn">Nộp lại bài</button>
+                            </div>
+                        `;
+                        
+                        // Re-attach event listener
+                        const newReSubmitBtn = document.getElementById('re-submit-btn');
+                        if (newReSubmitBtn) {
+                            newReSubmitBtn.addEventListener('click', function() {
+                                submissionSection.innerHTML = `
+                                    <div>
+                                        <h4>Nộp bài</h4>
+                                        <hr />
+                                        <form id="submit-form" enctype="multipart/form-data">
+                                            <input type="hidden" name="assignmentId" value="@Model.AssignmentId" />
+                                            <div class="form-group mb-3">
+                                                <label for="file">Chọn tệp</label>
+                                                <input type="file" name="file" id="file-input" class="form-control" required />
+                                            </div>
+                                            <button type="submit" class="btn btn-primary" id="submit-btn">Nộp bài</button>
+                                        </form>
+                                    </div>
+                                `;
+                                
+                                // Re-attach submit handler
+                                const newForm = document.getElementById('submit-form');
+                                const newFileInput = document.getElementById('file-input');
+                                const newSubmitBtn = document.getElementById('submit-btn');
+                                
+                                if (newForm) {
+                                    newForm.addEventListener('submit', function(e) {
+                                        e.preventDefault();
+                                        const formData = new FormData();
+                                        formData.append('assignmentId', '@Model.AssignmentId');
+                                        formData.append('file', newFileInput.files[0]);
+                                        submitFile(formData);
+                                    });
+                                }
+                            });
+                        }
+                    } else {
+                        showAlert(data.message, false);
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = 'Nộp bài';
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showAlert('Lỗi mạng. Vui lòng thử lại.', false);
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Nộp bài';
+                    }
+                });
+            }
+
+            if (submitForm) {
+                submitForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    if (!fileInput.files[0]) {
+                        showAlert('Vui lòng chọn file để nộp.', false);
+                        return;
+                    }
+
+                    const formData = new FormData();
+                    formData.append('assignmentId', '@Model.AssignmentId');
+                    formData.append('file', fileInput.files[0]);
+                    submitFile(formData);
+                });
+            }
+
+            if (reSubmitBtn) {
+                reSubmitBtn.addEventListener('click', function() {
+                    submissionSection.innerHTML = `
+                        <div>
+                            <h4>Nộp bài</h4>
+                            <hr />
+                            <form id="submit-form" enctype="multipart/form-data">
+                                <input type="hidden" name="assignmentId" value="@Model.AssignmentId" />
+                                <div class="form-group mb-3">
+                                    <label for="file">Chọn tệp</label>
+                                    <input type="file" name="file" id="file-input" class="form-control" required />
+                                </div>
+                                <button type="submit" class="btn btn-primary" id="submit-btn">Nộp bài</button>
+                            </form>
+                        </div>
+                    `;
+                    
+                    // Re-attach submit handler
+                    const newForm = document.getElementById('submit-form');
+                    const newFileInput = document.getElementById('file-input');
+                    const newSubmitBtn = document.getElementById('submit-btn');
+                    
+                    if (newForm) {
+                        newForm.addEventListener('submit', function(e) {
+                            e.preventDefault();
+                            if (!newFileInput.files[0]) {
+                                showAlert('Vui lòng chọn file để nộp.', false);
+                                return;
+                            }
+
+                            const formData = new FormData();
+                            formData.append('assignmentId', '@Model.AssignmentId');
+                            formData.append('file', newFileInput.files[0]);
+                            submitFile(formData);
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+}

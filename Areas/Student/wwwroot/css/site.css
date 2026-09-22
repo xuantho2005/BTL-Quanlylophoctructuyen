@@ -1,0 +1,30 @@
+/* CSS riêng cho Student Area */
+.navbar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 0.375rem;
+}
+
+/* Student cards styling */
+.student-card {
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+}
+
+.student-card:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+/* Responsive adjustments for Student area */
+@media (max-width: 767px) {
+    .navbar-nav .nav-link {
+        padding: 0.75rem 1rem !important;
+        margin: 0.25rem 0;
+    }
+    
+    .student-card {
+        margin-bottom: 1rem;
+    }
+}

@@ -1,0 +1,43 @@
+@{
+    // Lấy ClassId và ClassName mà Controller đã gửi
+    var classId = ViewBag.ClassId;
+    var className = ViewBag.ClassName;
+
+    // Lấy thông tin trang hiện tại để tô đậm (active) tab
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+}
+
+<h1>@className</h1>
+<hr />
+
+<ul class="nav nav-tabs mb-3">
+    
+    <li class="nav-item">
+        <a class="nav-link @(currentController == "Classes" && currentAction == "Details" ? "active" : "")" 
+           asp-controller="Classes" asp-action="Details" asp-route-id="@classId">
+            Tổng quan
+        </a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link @(currentController == "Classes" && currentAction == "StudentList" ? "active" : "")" 
+           asp-controller="Classes" asp-action="StudentList" asp-route-id="@classId">
+            Học viên
+        </a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link @(currentController == "CourseMaterials" ? "active" : "")" 
+           asp-controller="CourseMaterials" asp-action="Index" asp-route-classId="@classId">
+            Tài liệu
+        </a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link @(currentController == "Assignments" || currentController == "Submissions" ? "active" : "")" 
+           asp-controller="Assignments" asp-action="Index" asp-route-classId="@classId">
+            Bài tập
+        </a>
+    </li>
+</ul>

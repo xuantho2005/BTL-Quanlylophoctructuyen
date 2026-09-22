@@ -1,0 +1,30 @@
+@model OnlineClassManagement.Models.Assignment
+
+@{
+    ViewData["Title"] = "Xóa bài tập";
+}
+
+<h1>Xóa bài tập</h1>
+
+<h3 class="text-danger">Bạn có chắc chắn muốn xóa bài tập này không?</h3>
+<h4 class="text-danger">(Lưu ý: Nếu đã có sinh viên nộp bài, bạn sẽ không thể xóa.)</h4>
+<div>
+    <h4>@Model.Title</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">Mô tả</B></dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.Description)</dd>
+    
+        <dt class = "col-sm-2">Lớp học</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.Class.ClassName)</dd>
+        
+        <dt class = "col-sm-2">Loại bài tập</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.AssignmentType)</dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="AssignmentId" />
+        <input type="submit" value="Xác nhận Xóa" class="btn btn-danger" /> |
+        <a asp-action="Index" asp-route-classId="@Model.ClassId" class="btn btn-secondary">Hủy bỏ</a>
+    </form>
+</div>

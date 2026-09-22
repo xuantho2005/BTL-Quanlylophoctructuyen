@@ -1,0 +1,64 @@
+@model IEnumerable<OnlineClassManagement.Models.Assignment>
+
+@{
+    ViewData["Title"] = "Quản lý Bài tập";
+    // (ViewBag.ClassId và ViewBag.ClassName đã được Controller gửi)
+}
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @ViewBag.SuccessMessage
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @ViewBag.ErrorMessage
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@await Html.PartialAsync("_ClassDashboardNav")
+<p>
+    <a asp-action="Create" asp-route-classId="@ViewBag.ClassId" class="btn btn-primary">Tạo bài tập mới</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tiêu đề</th>
+            <th>Mô tả</th>
+            <th>Loại bài tập</th>
+            <th>Hạn nộp</th>
+            <th>Điểm tối đa</th>
+            <th>Trạng thái</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+            <td>@Html.DisplayFor(modelItem => item.AssignmentType)</td>
+            <td>@item.DueDate.ToString("dd/MM/yyyy HH:mm")</td>
+            <td>@Html.DisplayFor(modelItem => item.MaxScore)</td>
+            <td>
+                @if(item.IsPublished)
+                {
+                    <span class="badge bg-success">Đã xuất bản</span>
+                }
+                else
+                {
+                    <span class="badge bg-secondary">Bản nháp</span>
+                }
+            </td>
+            <td>
+                <a asp-controller="Submissions" asp-action="Index" asp-route-assignmentId="@item.AssignmentId" class="btn btn-sm btn-outline-info">Xem bài nộp</a>
+                <a asp-action="Edit" asp-route-id="@item.AssignmentId" class="btn btn-sm btn-outline-primary">Sửa</a>
+                <a asp-action="Delete" asp-route-id="@item.AssignmentId" class="btn btn-sm btn-outline-danger">Xóa</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

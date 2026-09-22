@@ -1,0 +1,84 @@
+@model OnlineClassManagement.Models.Assignment
+@using OnlineClassManagement.Models.Enums
+@{
+    ViewData["Title"] = "Chỉnh sửa bài tập";
+}
+
+<h1>Chỉnh sửa bài tập</h1>
+<h4>Lớp: @Model.Class.ClassName</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            
+            <input type="hidden" asp-for="AssignmentId" />
+            <input type="hidden" asp-for="ClassId" />
+            <input type="hidden" asp-for="CreatedAt" />
+
+            <div class="form-group mb-3">
+                <label asp-for="Title" class="control-label">Tiêu đề bài tập</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label asp-for="Description" class="control-label">Mô tả ngắn (Tùy chọn)</label>
+                <textarea asp-for="Description" class="form-control" rows="2"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Instructions" class="control-label">Hướng dẫn (Tùy chọn)</label>
+                <textarea asp-for="Instructions" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Instructions" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                     <div class="form-group mb-3">
+                        <label asp-for="DueDate" class="control-label">Hạn nộp</label>
+                        <input asp-for="DueDate" type="datetime-local" class="form-control" />
+                        <span asp-validation-for="DueDate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="MaxScore" class="control-label">Điểm tối đa</label>
+                        <input asp-for="MaxScore" type="number" class="form-control" />
+                        <span asp-validation-for="MaxScore" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="AssignmentType" class="control-label">Loại bài tập</label>
+                        <select asp-for="AssignmentType" asp-items="ViewBag.AssignmentTypes" class="form-control"></select>
+                        <span asp-validation-for="AssignmentType" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group form-check mb-3">
+                <input class="form-check-input" asp-for="AllowLateSubmission" />
+                <label class="form-check-label" asp-for="AllowLateSubmission">Cho phép nộp muộn</label>
+            </div>
+            
+            <div class="form-group form-check mb-3">
+                <input class="form-check-input" asp-for="IsPublished" />
+                <label class="form-check-label" asp-for="IsPublished">Đã xuất bản</label>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Lưu thay đổi" class="btn btn-primary" />
+                <a asp-action="Index" asp-route-classId="@Model.ClassId" class="btn btn-secondary">Hủy bỏ</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

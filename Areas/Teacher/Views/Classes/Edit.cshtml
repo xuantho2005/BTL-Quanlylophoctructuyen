@@ -1,0 +1,71 @@
+@model OnlineClassManagement.Models.Class
+
+@{
+    ViewData["Title"] = "Chỉnh sửa lớp học";
+}
+
+<h1>Chỉnh sửa lớp học</h1>
+<h4>@Model.ClassName</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit">
+            
+            <div asp-validation-summary="All" class="text-danger"></div>
+            
+            <input type="hidden" asp-for="ClassId" />
+            <input type="hidden" asp-for="TeacherId" />
+            <input type="hidden" asp-for="CreatedAt" />
+            
+            @* ... (các trường input khác) ... *@
+            <div class="form-group mb-3">
+                <label asp-for="ClassName" class="control-label">Tên lớp học</label>
+                <input asp-for="ClassName" class="form-control" />
+                <span asp-validation-for="ClassName" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ClassCode" class="control-label">Mã lớp</label>
+                <input asp-for="ClassCode" class="form-control" />
+                <span asp-validation-for="ClassCode" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="Semester" class="control-label">Học kỳ</label>
+                        <input asp-for="Semester" class="form-control" />
+                        <span asp-validation-for="Semester" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="AcademicYear" class="control-label">Năm học</label>
+                        <input asp-for="AcademicYear" class="form-control" />
+                        <span asp-validation-for="AcademicYear" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+             <div class="form-group mb-3">
+                <label asp-for="MaxStudents" class="control-label">Số sinh viên tối đa</label>
+                <input asp-for="MaxStudents" type="number" class="form-control" />
+                <span asp-validation-for="MaxStudents" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Description" class="control-label">Mô tả</label>
+                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check mb-3">
+                <input class="form-check-input" asp-for="IsActive" />
+                <label class="form-check-label" asp-for="IsActive">Đang hoạt động</label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lưu thay đổi" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

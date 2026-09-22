@@ -1,0 +1,90 @@
+@model OnlineClassManagement.Models.User
+
+@{
+    ViewData["Title"] = "Chi tiết người dùng";
+}
+
+<h1>Chi tiết người dùng</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">ID</dt>
+        <dd class="col-sm-10">@Model.UserId</dd>
+        
+        <dt class="col-sm-2">Họ tên</dt>
+        <dd class="col-sm-10">@Model.FullName</dd>
+        
+        <dt class="col-sm-2">Email</dt>
+        <dd class="col-sm-10">@Model.Email</dd>
+        
+        <dt class="col-sm-2">Vai trò</dt>
+        <dd class="col-sm-10">
+            <span class="badge @(Model.Role == "Admin" ? "bg-admin" : Model.Role == "Teacher" ? "bg-teacher" : "bg-student")">
+                @Model.Role
+            </span>
+        </dd>
+        
+        <dt class="col-sm-2">Số điện thoại</dt>
+        <dd class="col-sm-10">@(Model.PhoneNumber ?? "-")</dd>
+        
+        <dt class="col-sm-2">Ngày sinh</dt>
+        <dd class="col-sm-10">@(Model.DateOfBirth?.ToString("dd/MM/yyyy") ?? "-")</dd>
+        
+        <dt class="col-sm-2">Quê quán</dt>
+        <dd class="col-sm-10">@(Model.Hometown ?? "-")</dd>
+        
+        <dt class="col-sm-2">Trạng thái</dt>
+        <dd class="col-sm-10">
+            @if (Model.IsActive)
+            {
+                <span class="badge bg-success">Hoạt động</span>
+            }
+            else
+            {
+                <span class="badge bg-secondary">Vô hiệu hóa</span>
+            }
+        </dd>
+        
+        <dt class="col-sm-2">Ngày tạo</dt>
+        <dd class="col-sm-10">@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</dd>
+        
+        <dt class="col-sm-2">Cập nhật lần cuối</dt>
+        <dd class="col-sm-10">@Model.UpdatedAt.ToString("dd/MM/yyyy HH:mm")</dd>
+    </dl>
+    
+    @if (Model.Role == "Teacher" && Model.TaughtClasses != null && Model.TaughtClasses.Any())
+    {
+        <h4>Lớp học đang dạy (@Model.TaughtClasses.Count)</h4>
+        <ul>
+            @foreach (var cls in Model.TaughtClasses)
+            {
+                <li>@cls.ClassName (@cls.ClassCode)</li>
+            }
+        </ul>
+    }
+    
+    @if (Model.Role == "Student" && Model.Enrollments != null && Model.Enrollments.Any())
+    {
+        <h4>Lớp học đã đăng ký (@Model.Enrollments.Count)</h4>
+        <ul>
+            @foreach (var enrollment in Model.Enrollments)
+            {
+                <li>@enrollment.Class.ClassName (@enrollment.Class.ClassCode)</li>
+            }
+        </ul>
+    }
+    
+    @if (Model.Submissions != null && Model.Submissions.Any())
+    {
+        <h4>Bài nộp (@Model.Submissions.Count)</h4>
+        <p class="text-muted">Tổng số bài đã nộp: @Model.Submissions.Count</p>
+    }
+</div>
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.UserId" class="btn btn-warning">Sửa</a>
+    <a asp-action="ChangePassword" asp-route-id="@Model.UserId" class="btn btn-secondary">Đổi mật khẩu</a>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</div>
+

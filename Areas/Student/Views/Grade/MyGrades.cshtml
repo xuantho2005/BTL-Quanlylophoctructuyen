@@ -1,0 +1,42 @@
+@model IEnumerable<OnlineClassManagement.Models.Submission>
+
+@{    ViewData["Title"] = "My Grades";
+}
+
+<h1>Điểm của tôi</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Lớp học
+            </th>
+            <th>
+                Phân công
+            </th>
+            <th>
+                Điểm
+            </th>
+            <th>
+                Nhận xét
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Assignment.Class.ClassName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Assignment.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Score)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Feedback)
+            </td>
+        </tr>
+}
+    </tbody>

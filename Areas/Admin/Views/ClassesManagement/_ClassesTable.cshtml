@@ -1,0 +1,38 @@
+@model IEnumerable<OnlineClassManagement.Models.Class>
+
+@foreach (var item in Model)
+{
+    <tr id="class-row-@item.ClassId">
+        <td>@item.ClassId</td>
+        <td>@item.ClassName</td>
+        <td>@item.ClassCode</td>
+        <td>@item.Teacher.FullName</td>
+        <td>@item.Semester</td>
+        <td>@item.AcademicYear</td>
+        <td id="status-@item.ClassId">
+            @if (item.IsActive)
+            {
+                <span class="badge bg-success">Hoạt động</span>
+            }
+            else
+            {
+                <span class="badge bg-secondary">Vô hiệu hóa</span>
+            }
+        </td>
+        <td>@item.CreatedAt.ToString("dd/MM/yyyy")</td>
+        <td id="actions-@item.ClassId" class="action-buttons">
+            <div class="d-flex flex-column gap-1">
+                <a asp-action="Details" asp-route-id="@item.ClassId" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
+                @if (item.IsActive)
+                {
+                    <a asp-action="Delete" asp-route-id="@item.ClassId" class="btn btn-sm btn-outline-secondary">Vô hiệu hóa</a>
+                }
+                else
+                {
+                    <button class="btn btn-sm btn-outline-secondary btn-activate-class" data-class-id="@item.ClassId">Kích hoạt</button>
+                }
+            </div>
+        </td>
+    </tr>
+}
+

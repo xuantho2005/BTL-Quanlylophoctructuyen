@@ -1,0 +1,55 @@
+@model IEnumerable<OnlineClassManagement.Models.CourseMaterial>
+
+@{
+    ViewData["Title"] = "Quản lý Tài liệu";
+    // (ViewBag.ClassId và ViewBag.ClassName đã được Controller gửi)
+}
+
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @ViewBag.SuccessMessage
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @ViewBag.ErrorMessage
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@await Html.PartialAsync("_ClassDashboardNav")
+<p>
+    <a asp-action="Create" asp-route-classId="@ViewBag.ClassId" class="btn btn-primary">Tải lên tài liệu mới</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tiêu đề</th>
+            <th>Mô tả</th>
+            <th>Tên tệp gốc</th>
+            <th>Kích thước</th>
+            <th>Ngày tải lên</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+            <td>@Html.DisplayFor(modelItem => item.OriginalFileName)</td>
+            <td>
+                @((item.FileSize / 1024).ToString("N0")) KB
+            </td>
+            <td>@item.UploadedAt.ToString("dd/MM/yyyy")</td>
+            <td>
+                <a href="@item.FileUrl" target="_blank" class="btn btn-sm btn-outline-info">Xem</a>
+                <a asp-action="Delete" asp-route-id="@item.MaterialId" class="btn btn-sm btn-outline-danger">Xóa</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

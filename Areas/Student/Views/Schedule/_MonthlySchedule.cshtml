@@ -1,0 +1,63 @@
+@model OnlineClassManagement.Models.ViewModels.MonthlyScheduleViewModel
+
+@{ 
+    var startOfMonth = new DateTime(Model.CurrentMonth.Year, Model.CurrentMonth.Month, 1);
+    var endOfMonth = startOfMonth.AddMonths(1).AddDays(-1);
+    var startDayOfWeek = (int)startOfMonth.DayOfWeek;
+    if (startDayOfWeek == 0) { startDayOfWeek = 7; } // Sunday is 0, make it 7
+    startDayOfWeek--; // Monday is 0, Sunday is 6
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Thứ 2</th>
+            <th>Thứ 3</th>
+            <th>Thứ 4</th>
+            <th>Thứ 5</th>
+            <th>Thứ 6</th>
+            <th>Thứ 7</th>
+            <th>Chủ nhật</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @for (int i = 0; i < startDayOfWeek; i++)
+            {
+                <td></td>
+            }
+
+            @for (var date = startOfMonth; date <= endOfMonth; date = date.AddDays(1))
+            {
+                if (date.DayOfWeek == DayOfWeek.Monday && date != startOfMonth)
+                {
+                    @:</tr><tr>
+                }
+
+                <td>
+                    <div>@date.Day</div>
+                    @if (Model.Schedules.ContainsKey(date))
+                    {
+                        foreach (var schedule in Model.Schedules[date])
+                        {
+                            <div class="mb-1">
+                                <strong>@schedule.Class.ClassName</strong><br>
+                                <small>@schedule.StartTime.ToString(@"hh\:mm") - @schedule.EndTime.ToString(@"hh\:mm")</small>
+                                @if (!string.IsNullOrEmpty(schedule.Location))
+                                {
+                                    <br><small class="text-muted">📍 @schedule.Location</small>
+                                }
+                            </div>
+                        }
+                    }
+                </td>
+            }
+
+            @while ((int)endOfMonth.DayOfWeek != 0)
+            {
+                <td></td>
+                endOfMonth = endOfMonth.AddDays(1);
+            }
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,50 @@
+@model IEnumerable<OnlineClassManagement.Models.Class>
+
+@{ 
+    ViewData["Title"] = "Lớp học đã tham gia";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (Model.Any()) 
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Tên lớp
+                </th>
+                <th>
+                   Mã lớp
+                </th>
+                <th>
+                    Mô tả
+                </th>
+                 <th>Thao tác</th> </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                         @Html.DisplayFor(modelItem => item.ClassName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClassCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        <a asp-controller="Class" asp-action="CourseMaterials" asp-route-classId="@item.ClassId" class="btn btn-sm btn-outline-info">Xem tài liệu</a>
+                        <a asp-controller="Class" asp-action="Assignments" asp-route-classId="@item.ClassId" class="btn btn-sm btn-outline-primary">Xem bài tập</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else 
+{
+    <p>Bạn chưa tham gia lớp học nào.</p>
+}

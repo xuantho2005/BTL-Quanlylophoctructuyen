@@ -1,0 +1,155 @@
+@model IEnumerable<OnlineClassManagement.Models.Class>
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+
+@{ 
+    ViewData["Title"] = "Search Classes";
+    var requestToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+}
+
+<h1>Tìm kiếm lớp học</h1>
+
+<div id="ajax-status-container"></div>
+
+<form id="search-form" method="get">
+    <div class="input-group mb-3">
+        <input type="text" name="searchString" id="search-input" class="form-control" placeholder="Nhập tên lớp hoặc mã lớp..." />
+        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tên lớp</th>
+            <th>Mã lớp</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody id="classes-table-body">
+@foreach (var item in Model)
+{
+        <tr id="class-row-@item.ClassId">
+            <td>@item.ClassName</td>
+            <td>@item.ClassCode</td>
+            <td>
+                <button class="btn btn-primary btn-sm btn-join-class" data-class-id="@item.ClassId">Tham gia</button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchForm = document.getElementById('search-form');
+            const searchInput = document.getElementById('search-input');
+            const tableBody = document.getElementById('classes-table-body');
+            const statusContainer = document.getElementById('ajax-status-container');
+            const joinButtons = document.querySelectorAll('.btn-join-class');
+            const joinUrl = '@Url.Action("Join", "Class", new { area = "Student" })';
+            const searchUrl = '@Url.Action("Search", "Class", new { area = "Student" })';
+
+            function showAlert(message, isSuccess) {
+                statusContainer.innerHTML = '';
+                const alertDiv = document.createElement('div');
+                alertDiv.className = `alert ${isSuccess ? 'alert-success' : 'alert-danger'} alert-dismissible fade show`;
+                alertDiv.setAttribute('role', 'alert');
+                alertDiv.innerHTML = `
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                statusContainer.appendChild(alertDiv);
+                setTimeout(() => {
+                    alertDiv.classList.remove('show');
+                    setTimeout(() => alertDiv.remove(), 150);
+                }, 3000);
+            }
+
+            // Xử lý tìm kiếm
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const searchString = searchInput.value;
+                
+                fetch(`${searchUrl}?searchString=${encodeURIComponent(searchString)}`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        tableBody.innerHTML = '';
+                        if (data.classes.length === 0) {
+                            tableBody.innerHTML = '<tr><td colspan="3" class="text-center">Không tìm thấy lớp học nào.</td></tr>';
+                        } else {
+                            data.classes.forEach(cls => {
+                                const row = document.createElement('tr');
+                                row.id = `class-row-${cls.classId}`;
+                                row.innerHTML = `
+                                    <td>${cls.className}</td>
+                                    <td>${cls.classCode}</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm btn-join-class" data-class-id="${cls.classId}">Tham gia</button>
+                                    </td>
+                                `;
+                                tableBody.appendChild(row);
+                            });
+                            // Re-attach event listeners
+                            attachJoinHandlers();
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showAlert('Lỗi khi tìm kiếm. Vui lòng thử lại.', false);
+                });
+            });
+
+            // Xử lý tham gia lớp học
+            function attachJoinHandlers() {
+                document.querySelectorAll('.btn-join-class').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const classId = this.getAttribute('data-class-id');
+                        const button = this;
+                        button.disabled = true;
+                        button.textContent = 'Đang xử lý...';
+
+                        fetch(joinUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'RequestVerificationToken': '@requestToken'
+                            },
+                            body: `classId=${classId}`
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showAlert(data.message, true);
+                                button.textContent = 'Đã tham gia';
+                                button.classList.remove('btn-primary');
+                                button.classList.add('btn-success');
+                                button.disabled = true;
+                            } else {
+                                showAlert(data.message, false);
+                                button.disabled = false;
+                                button.textContent = 'Tham gia';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            showAlert('Lỗi mạng. Vui lòng thử lại.', false);
+                            button.disabled = false;
+                            button.textContent = 'Tham gia';
+                        });
+                    });
+                });
+            }
+
+            attachJoinHandlers();
+        });
+    </script>
+}

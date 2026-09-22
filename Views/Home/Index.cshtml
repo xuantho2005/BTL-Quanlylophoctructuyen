@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+@if (User?.Identity?.IsAuthenticated == true)
+{
+    @if (User.IsInRole("Teacher"))
+    {
+        <div class="alert alert-success">
+            <h4>Chào mừng giáo viên @(User?.Identity?.Name ?? "")!</h4>
+            <p>Bạn đã đăng nhập thành công với vai trò giáo viên.</p>
+        </div>
+    }
+    else if (User.IsInRole("Student"))
+    {
+        <div class="alert alert-info">
+            <h4>Chào mừng @(User?.Identity?.Name ?? "")!</h4>
+            <p>Bạn đã đăng nhập với vai trò học sinh.</p>
+        </div>
+    }
+    else if (User.IsInRole("Admin"))
+    {
+        <div class="alert alert-warning">
+            <h4>Chào mừng quản trị viên @(User?.Identity?.Name ?? "")!</h4>
+            <p>Bạn đã đăng nhập với vai trò quản trị viên.</p>
+        </div>
+    }
+}
+else
+{
+    <div class="text-center py-5">
+        <h1 class="mb-4">HỆ THỐNG QUẢN LÝ LỚP HỌC TRỰC TUYẾN</h1>
+        <p class="lead mb-4">Nền tảng quản lý lớp học, bài tập và điểm số hiện đại</p>
+        <div class="mt-4">
+            <a class="btn btn-primary btn-lg me-2" asp-controller="Account" asp-action="Login">Đăng nhập</a>
+            <a class="btn btn-outline-primary btn-lg" asp-controller="Account" asp-action="Register">Đăng ký</a>
+        </div>
+    </div>
+}

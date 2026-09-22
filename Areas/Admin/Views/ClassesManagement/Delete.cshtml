@@ -1,0 +1,37 @@
+@model OnlineClassManagement.Models.Class
+
+@{
+    ViewData["Title"] = "Vô hiệu hóa Lớp học";
+}
+
+<h1>Vô hiệu hóa Lớp học</h1>
+
+<h3>Bạn có chắc chắn muốn vô hiệu hóa lớp học này?</h3>
+<p class="text-info">Lớp học sẽ bị vô hiệu hóa (không xóa) để đảm bảo tính nhất quán dữ liệu. Bạn có thể kích hoạt lại sau.</p>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Tên lớp</dt>
+        <dd class="col-sm-10">@Model.ClassName</dd>
+        
+        <dt class="col-sm-2">Mã lớp</dt>
+        <dd class="col-sm-10">@Model.ClassCode</dd>
+        
+        <dt class="col-sm-2">Giảng viên</dt>
+        <dd class="col-sm-10">@Model.Teacher.FullName</dd>
+        
+        <dt class="col-sm-2">Số học viên</dt>
+        <dd class="col-sm-10">@(Model.Enrollments?.Count ?? 0)</dd>
+        
+        <dt class="col-sm-2">Số bài tập</dt>
+        <dd class="col-sm-10">@(Model.Assignments?.Count ?? 0)</dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ClassId" />
+        <input type="submit" value="Vô hiệu hóa" class="btn btn-warning" />
+        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>
+

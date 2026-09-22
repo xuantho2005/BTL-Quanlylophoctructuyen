@@ -1,0 +1,32 @@
+@model OnlineClassManagement.Models.CourseMaterial
+
+@{
+    ViewData["Title"] = "Xóa tài liệu";
+}
+
+<h1>Xóa tài liệu</h1>
+
+<h3 class="text-danger">Bạn có chắc chắn muốn xóa tài liệu này không?</h3>
+<div>
+    <h4>@Model.Title</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-3">Tên tệp gốc</dt>
+        <dd class = "col-sm-9">@Html.DisplayFor(model => model.OriginalFileName)</dd>
+        
+        <dt class = "col-sm-3">Kích thước</dt>
+        <dd class = "col-sm-9">@((Model.FileSize / 1024).ToString("N0")) KB</dd>
+        
+        <dt class = "col-sm-3">Lớp học</dt>
+        <dd class = "col-sm-9">@Html.DisplayFor(model => model.Class.ClassName)</dd>
+        
+        <dt class = "col-sm-3">Ngày tải lên</dt>
+        <dd class = "col-sm-9">@Model.UploadedAt.ToString("dd/MM/yyyy")</dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="MaterialId" />
+        <input type="submit" value="Xác nhận Xóa" class="btn btn-danger" /> |
+        <a asp-action="Index" asp-route-classId="@Model.ClassId" class="btn btn-secondary">Hủy bỏ</a>
+    </form>
+</div>

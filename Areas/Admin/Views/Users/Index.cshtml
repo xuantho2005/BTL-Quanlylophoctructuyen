@@ -1,0 +1,269 @@
+@model IEnumerable<OnlineClassManagement.Models.User>
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+
+@{
+    ViewData["Title"] = "Quản lý Người dùng";
+    var requestToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+}
+
+<h1 class="mb-4">Quản lý Người dùng</h1>
+
+<div id="ajax-status-container"></div>
+
+<div class="row mb-3">
+    <div class="col-md-12">
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+            <a asp-action="Create" class="btn btn-primary btn-action">Thêm tài khoản mới</a>
+            
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+                <select id="role-filter" class="form-select" style="width: auto;">
+                    <option value="All" selected="@(ViewBag.RoleFilter == "All")">Tất cả</option>
+                    <option value="Admin" selected="@(ViewBag.RoleFilter == "Admin")">Admin</option>
+                    <option value="Teacher" selected="@(ViewBag.RoleFilter == "Teacher")">Giảng viên</option>
+                    <option value="Student" selected="@(ViewBag.RoleFilter == "Student")">Học viên</option>
+                </select>
+                <input type="text" id="search-term" class="form-control" placeholder="Tìm kiếm..." value="@ViewBag.SearchTerm" style="width: 300px;">
+                <button type="button" id="search-btn" class="btn btn-outline-secondary btn-action">Tìm kiếm</button>
+                <button type="button" id="clear-filter-btn" class="btn btn-outline-secondary btn-action">Xóa bộ lọc</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover" style="width: 100%;">
+        <thead>
+            <tr>
+                <th style="width: 5%;">ID</th>
+                <th style="width: 12%;">Họ tên</th>
+                <th style="width: 15%;">Email</th>
+                <th style="width: 8%;">Vai trò</th>
+                <th style="width: 10%;">Số điện thoại</th>
+                <th style="width: 8%;">Trạng thái</th>
+                <th style="width: 10%;">Ngày tạo</th>
+                <th style="width: 22%; text-align: center;">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody id="users-table-body">
+            @foreach (var item in Model)
+            {
+                <tr id="user-row-@item.UserId">
+                    <td>@item.UserId</td>
+                    <td>@item.FullName</td>
+                    <td>@item.Email</td>
+                    <td>
+                        <span class="badge @(item.Role == "Admin" ? "bg-admin" : item.Role == "Teacher" ? "bg-teacher" : "bg-student")">
+                            @item.Role
+                        </span>
+                    </td>
+                    <td>@(item.PhoneNumber ?? "-")</td>
+                    <td id="status-@item.UserId">
+                        @if (item.IsActive)
+                        {
+                            <span class="badge bg-success">Hoạt động</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Vô hiệu hóa</span>
+                        }
+                    </td>
+                    <td>@item.CreatedAt.ToString("dd/MM/yyyy")</td>
+                    <td id="actions-@item.UserId" class="action-buttons">
+                        <div class="d-flex flex-column gap-1">
+                            <a asp-action="Details" asp-route-id="@item.UserId" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
+                            <a asp-action="Edit" asp-route-id="@item.UserId" class="btn btn-sm btn-outline-secondary">Sửa</a>
+                            <a asp-action="ChangePassword" asp-route-id="@item.UserId" class="btn btn-sm btn-outline-secondary">Đổi mật khẩu</a>
+                            @if (item.IsActive)
+                            {
+                                <button class="btn btn-sm btn-outline-secondary btn-toggle-status" data-user-id="@item.UserId" data-action="deactivate">Vô hiệu hóa</button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-sm btn-outline-secondary btn-toggle-status" data-user-id="@item.UserId" data-action="activate">Kích hoạt</button>
+                            }
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusContainer = document.getElementById('ajax-status-container');
+            const toggleButtons = document.querySelectorAll('.btn-toggle-status');
+            const activateUrl = '@Url.Action("Activate", "Users", new { area = "Admin" })';
+            const deactivateUrl = '@Url.Action("Delete", "Users", new { area = "Admin" })';
+            const indexUrl = '@Url.Action("Index", "Users", new { area = "Admin" })';
+            const roleFilter = document.getElementById('role-filter');
+            const searchTerm = document.getElementById('search-term');
+            const searchBtn = document.getElementById('search-btn');
+            const clearFilterBtn = document.getElementById('clear-filter-btn');
+            const tableBody = document.getElementById('users-table-body');
+            
+            // Loading state
+            let isLoading = false;
+            
+            // Function to load users via AJAX
+            function loadUsers(roleFilterValue, searchTermValue) {
+                if (isLoading) return;
+                
+                isLoading = true;
+                tableBody.innerHTML = '<tr><td colspan="8" class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Đang tải...</span></div></td></tr>';
+                
+                const params = new URLSearchParams();
+                if (roleFilterValue && roleFilterValue !== 'All') {
+                    params.append('roleFilter', roleFilterValue);
+                }
+                if (searchTermValue) {
+                    params.append('searchTerm', searchTermValue);
+                }
+                
+                fetch(`${indexUrl}?${params.toString()}`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.text())
+                .then(html => {
+                    tableBody.innerHTML = html;
+                    // Re-attach toggle handlers
+                    const newToggleButtons = document.querySelectorAll('.btn-toggle-status');
+                    newToggleButtons.forEach(button => {
+                        attachToggleHandler(button);
+                    });
+                    isLoading = false;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    tableBody.innerHTML = '<tr><td colspan="8" class="text-center text-danger">Lỗi khi tải dữ liệu. Vui lòng thử lại.</td></tr>';
+                    isLoading = false;
+                });
+            }
+            
+            // Search button click
+            searchBtn.addEventListener('click', function() {
+                const roleValue = roleFilter.value;
+                const searchValue = searchTerm.value;
+                loadUsers(roleValue, searchValue);
+            });
+            
+            // Enter key in search input
+            searchTerm.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    searchBtn.click();
+                }
+            });
+            
+            // Role filter change
+            roleFilter.addEventListener('change', function() {
+                const roleValue = roleFilter.value;
+                const searchValue = searchTerm.value;
+                loadUsers(roleValue, searchValue);
+            });
+            
+            // Clear filter button
+            clearFilterBtn.addEventListener('click', function() {
+                roleFilter.value = 'All';
+                searchTerm.value = '';
+                loadUsers('All', '');
+            });
+
+            function showAlert(message, isSuccess) {
+                statusContainer.innerHTML = '';
+                const alertDiv = document.createElement('div');
+                alertDiv.className = `alert ${isSuccess ? 'alert-success' : 'alert-danger'} alert-dismissible fade show`;
+                alertDiv.setAttribute('role', 'alert');
+                alertDiv.innerHTML = `
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                statusContainer.appendChild(alertDiv);
+                setTimeout(() => {
+                    alertDiv.classList.remove('show');
+                    setTimeout(() => alertDiv.remove(), 150);
+                }, 3000);
+            }
+
+            function attachToggleHandler(button) {
+                button.addEventListener('click', function() {
+                    const userId = this.getAttribute('data-user-id');
+                    const action = this.getAttribute('data-action');
+                    const url = action === 'activate' ? activateUrl : deactivateUrl;
+                    
+                    if (action === 'deactivate' && !confirm('Bạn có chắc chắn muốn vô hiệu hóa tài khoản này?')) {
+                        return;
+                    }
+
+                    const button = this;
+                    button.disabled = true;
+                    const originalText = button.textContent;
+                    button.textContent = 'Đang xử lý...';
+
+                    fetch(action === 'activate' ? `${activateUrl}/${userId}` : `${deactivateUrl}/${userId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'RequestVerificationToken': '@requestToken'
+                        },
+                        body: `id=${userId}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            showAlert(data.message, true);
+                            
+                            // Cập nhật trạng thái
+                            const statusCell = document.getElementById(`status-${userId}`);
+                            const actionsCell = document.getElementById(`actions-${userId}`);
+                            
+                            if (data.isActive) {
+                                statusCell.innerHTML = '<span class="badge bg-success">Hoạt động</span>';
+                                const button = actionsCell.querySelector('.btn-toggle-status');
+                                if (button) {
+                                    button.className = 'btn btn-sm btn-outline-secondary btn-toggle-status';
+                                    button.setAttribute('data-action', 'deactivate');
+                                    button.textContent = 'Vô hiệu hóa';
+                                }
+                            } else {
+                                statusCell.innerHTML = '<span class="badge bg-secondary">Vô hiệu hóa</span>';
+                                const button = actionsCell.querySelector('.btn-toggle-status');
+                                if (button) {
+                                    button.className = 'btn btn-sm btn-outline-secondary btn-toggle-status';
+                                    button.setAttribute('data-action', 'activate');
+                                    button.textContent = 'Kích hoạt';
+                                }
+                            }
+                            
+                            // Re-attach event listeners
+                            const newButton = actionsCell.querySelector('.btn-toggle-status');
+                            if (newButton) {
+                                attachToggleHandler(newButton);
+                            }
+                        } else {
+                            showAlert(data.message, false);
+                            button.disabled = false;
+                            button.textContent = originalText;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showAlert('Lỗi mạng. Vui lòng thử lại.', false);
+                        button.disabled = false;
+                        button.textContent = originalText;
+                    });
+                });
+            }
+
+            toggleButtons.forEach(button => {
+                attachToggleHandler(button);
+            });
+        });
+    </script>
+}
+

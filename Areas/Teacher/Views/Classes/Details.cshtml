@@ -1,0 +1,56 @@
+@model OnlineClassManagement.Models.Class
+
+@{
+    ViewData["Title"] = "Chi tiết lớp học";
+}
+
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @ViewBag.SuccessMessage
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<h1>Chi tiết: @Model.ClassName</h1>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">Mã lớp</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.ClassCode)</dd>
+        
+        <dt class = "col-sm-2">Mô tả</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.Description)</dd>
+        
+        <dt class = "col-sm-2">Ngày tạo</dt>
+        <dd class = "col-sm-10">@Model.CreatedAt.ToString("dd/MM/yyyy")</dd>
+
+        <dt class = "col-sm-2">Năm học</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.AcademicYear)</dd>
+        
+        <dt class = "col-sm-2">Học kỳ</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.Semester)</dd>
+        
+        <dt class = "col-sm-2">Sĩ số tối đa</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.MaxStudents)</dd>
+        
+        <dt class = "col-sm-2">Trạng thái</dt>
+        <dd class = "col-sm-10">@(Model.IsActive ? "Hoạt động" : "Ẩn")</dd>
+        
+        <dt class = "col-sm-2">Cập nhật lần cuối</dt>
+        <dd class = "col-sm-10">@Model.UpdatedAt.ToString("dd/MM/yyyy HH:mm")</dd>
+    </dl>
+</div>
+<hr />
+
+<h3>Quản lý Lớp học</h3>
+<p>
+    <a asp-action="StudentList" asp-route-id="@Model.ClassId" class="btn btn-info">Xem Danh sách Học viên</a>   
+    <a asp-controller="CourseMaterials" asp-action="Index" asp-route-classId="@Model.ClassId" class="btn btn-info">Quản lý Tài liệu</a>
+    <a asp-controller="Assignments" asp-action="Index" asp-route-classId="@Model.ClassId" class="btn btn-info">Quản lý Bài tập</a>
+</p>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ClassId" class="btn btn-primary">Sửa</a> |
+    <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+</div>

@@ -1,0 +1,325 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\OnlineClassManagement.bundle.scp.css",
+      "PackagePath": "staticwebassets\\OnlineClassManagement.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\materials\\1e78ffc2-559d-4724-872e-43e9dda22d53_BaoCaoWNC.docx",
+      "PackagePath": "staticwebassets\\materials\\1e78ffc2-559d-4724-872e-43e9dda22d53_BaoCaoWNC.docx"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\materials\\4b2aa5fc-8bb7-4613-bc7f-ca13dc4c49cb_A032021–Injection-DauHuyVan.pptx",
+      "PackagePath": "staticwebassets\\materials\\4b2aa5fc-8bb7-4613-bc7f-ca13dc4c49cb_A032021–Injection-DauHuyVan.pptx"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\materials\\87a08629-44b8-4491-8096-9e77662afb66_01 - PM Introduce _ Framework 2022.pdf",
+      "PackagePath": "staticwebassets\\materials\\87a08629-44b8-4491-8096-9e77662afb66_01 - PM Introduce _ Framework 2022.pdf"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\materials\\bcc5e248-8b12-4585-ab20-aa2c25934b0d_BaoCaoWNC (1).docx",
+      "PackagePath": "staticwebassets\\materials\\bcc5e248-8b12-4585-ab20-aa2c25934b0d_BaoCaoWNC (1).docx"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\materials\\be618039-0934-4986-9082-6ff67b6fcf95_BaoCaoWNC.docx",
+      "PackagePath": "staticwebassets\\materials\\be618039-0934-4986-9082-6ff67b6fcf95_BaoCaoWNC.docx"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\materials\\f81d863d-6238-4846-beb5-34fc0f9e7827_A032021–Injection-DauHuyVan.pptx",
+      "PackagePath": "staticwebassets\\materials\\f81d863d-6238-4846-beb5-34fc0f9e7827_A032021–Injection-DauHuyVan.pptx"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\materials\\slide1.pdf",
+      "PackagePath": "staticwebassets\\materials\\slide1.pdf"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\materials\\slide2.pdf",
+      "PackagePath": "staticwebassets\\materials\\slide2.pdf"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\materials\\sql.pdf",
+      "PackagePath": "staticwebassets\\materials\\sql.pdf"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\submissions\\.placeholder",
+      "PackagePath": "staticwebassets\\submissions\\.placeholder"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\submissions\\06 - PM Cost 2022.pdf",
+      "PackagePath": "staticwebassets\\submissions\\06 - PM Cost 2022.pdf"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\submissions\\BaoCaoWNC.docx",
+      "PackagePath": "staticwebassets\\submissions\\BaoCaoWNC.docx"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\submissions\\evernight-honkai-star-rail-hd-wallpaper-uhdpaper.com-166@5@i.jpg",
+      "PackagePath": "staticwebassets\\submissions\\evernight-honkai-star-rail-hd-wallpaper-uhdpaper.com-166@5@i.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\submissions\\hutao.jpg",
+      "PackagePath": "staticwebassets\\submissions\\hutao.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vuong\\Documents\\Thuc hanh wnc\\BTL_WNC\\wwwroot\\submissions\\sw1.jpg",
+      "PackagePath": "staticwebassets\\submissions\\sw1.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.OnlineClassManagement.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.OnlineClassManagement.props",
+      "PackagePath": "build\\OnlineClassManagement.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.OnlineClassManagement.props",
+      "PackagePath": "buildMultiTargeting\\OnlineClassManagement.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.OnlineClassManagement.props",
+      "PackagePath": "buildTransitive\\OnlineClassManagement.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

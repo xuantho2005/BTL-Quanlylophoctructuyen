@@ -1,0 +1,268 @@
+@model OnlineClassManagement.Models.ViewModels.CreateClassWithSchedulesViewModel
+
+@{
+    ViewData["Title"] = "Tạo lớp học mới";
+}
+
+<h1>Tạo lớp học mới</h1>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create" id="createClassForm">
+            
+            <div asp-validation-summary="All" class="text-danger"></div>
+            
+            <h4 class="mb-3">Thông tin lớp học</h4>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="ClassName" class="control-label">Tên lớp học</label>
+                        <input asp-for="ClassName" class="form-control" />
+                        <span asp-validation-for="ClassName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="ClassCode" class="control-label">Mã lớp</label>
+                        <input asp-for="ClassCode" class="form-control" />
+                        <span asp-validation-for="ClassCode" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="Semester" class="control-label">Học kỳ</label>
+                        <input asp-for="Semester" class="form-control" placeholder="Ví dụ: Học kỳ 1" />
+                        <span asp-validation-for="Semester" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="AcademicYear" class="control-label">Năm học</label>
+                        <input asp-for="AcademicYear" class="form-control" placeholder="Ví dụ: 2024-2025" />
+                        <span asp-validation-for="AcademicYear" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="MaxStudents" class="control-label">Số sinh viên tối đa</label>
+                        <input asp-for="MaxStudents" type="number" class="form-control" />
+                        <span asp-validation-for="MaxStudents" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label asp-for="Description" class="control-label">Mô tả</label>
+                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <hr class="my-4" />
+            
+            <h4 class="mb-3">Lịch học</h4>
+            <p class="text-muted">Vui lòng thêm ít nhất một lịch học cho lớp học này.</p>
+            
+            <div id="schedulesContainer">
+                @if (Model.Schedules != null && Model.Schedules.Count > 0)
+                {
+                    @for (int i = 0; i < Model.Schedules.Count; i++)
+                    {
+                        var schedule = Model.Schedules[i];
+                        <div class="schedule-item card mb-3" style="border: 2px solid #E0E0E0;">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="mb-0">Lịch học @(i + 1)</h5>
+                                    <button type="button" class="btn btn-sm btn-outline-danger remove-schedule-btn">Xóa</button>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group mb-3">
+                                            <label class="control-label">Thứ trong tuần</label>
+                                            <select name="Schedules[@i].DayOfWeek" class="form-select" required>
+                                                <option value="">-- Chọn thứ --</option>
+                                                <option value="0" selected="@(schedule.DayOfWeek == DayOfWeek.Sunday)">Chủ Nhật</option>
+                                                <option value="1" selected="@(schedule.DayOfWeek == DayOfWeek.Monday)">Thứ Hai</option>
+                                                <option value="2" selected="@(schedule.DayOfWeek == DayOfWeek.Tuesday)">Thứ Ba</option>
+                                                <option value="3" selected="@(schedule.DayOfWeek == DayOfWeek.Wednesday)">Thứ Tư</option>
+                                                <option value="4" selected="@(schedule.DayOfWeek == DayOfWeek.Thursday)">Thứ Năm</option>
+                                                <option value="5" selected="@(schedule.DayOfWeek == DayOfWeek.Friday)">Thứ Sáu</option>
+                                                <option value="6" selected="@(schedule.DayOfWeek == DayOfWeek.Saturday)">Thứ Bảy</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        <div class="form-group mb-3">
+                                            <label class="control-label">Giờ bắt đầu</label>
+                                            <input type="time" name="Schedules[@i].StartTime" class="form-control" value="@schedule.StartTime.ToString(@"hh\:mm")" required />
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        <div class="form-group mb-3">
+                                            <label class="control-label">Giờ kết thúc</label>
+                                            <input type="time" name="Schedules[@i].EndTime" class="form-control" value="@schedule.EndTime.ToString(@"hh\:mm")" required />
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        <div class="form-group mb-3">
+                                            <label class="control-label">Địa điểm</label>
+                                            <input type="text" name="Schedules[@i].Location" class="form-control" value="@schedule.Location" placeholder="Ví dụ: Phòng A101" />
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label class="control-label">Ngày bắt đầu</label>
+                                            <input type="date" name="Schedules[@i].StartDate" class="form-control" value="@schedule.StartDate.ToString("yyyy-MM-dd")" required />
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label class="control-label">Ngày kết thúc</label>
+                                            <input type="date" name="Schedules[@i].EndDate" class="form-control" value="@schedule.EndDate.ToString("yyyy-MM-dd")" required />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            
+            <div class="mb-3">
+                <button type="button" id="addScheduleBtn" class="btn btn-outline-primary">+ Thêm lịch học</button>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Tạo mới" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        let scheduleIndex = @Model.Schedules.Count;
+        
+        document.getElementById('addScheduleBtn').addEventListener('click', function() {
+            const container = document.getElementById('schedulesContainer');
+            const scheduleHtml = `
+                <div class="schedule-item card mb-3" style="border: 2px solid #E0E0E0;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="mb-0">Lịch học ${scheduleIndex + 1}</h5>
+                            <button type="button" class="btn btn-sm btn-outline-danger remove-schedule-btn">Xóa</button>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group mb-3">
+                                    <label class="control-label">Thứ trong tuần</label>
+                                    <select name="Schedules[${scheduleIndex}].DayOfWeek" class="form-select" required>
+                                        <option value="">-- Chọn thứ --</option>
+                                        <option value="0">Chủ Nhật</option>
+                                        <option value="1">Thứ Hai</option>
+                                        <option value="2">Thứ Ba</option>
+                                        <option value="3">Thứ Tư</option>
+                                        <option value="4">Thứ Năm</option>
+                                        <option value="5">Thứ Sáu</option>
+                                        <option value="6">Thứ Bảy</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <div class="form-group mb-3">
+                                    <label class="control-label">Giờ bắt đầu</label>
+                                    <input type="time" name="Schedules[${scheduleIndex}].StartTime" class="form-control" required />
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <div class="form-group mb-3">
+                                    <label class="control-label">Giờ kết thúc</label>
+                                    <input type="time" name="Schedules[${scheduleIndex}].EndTime" class="form-control" required />
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <div class="form-group mb-3">
+                                    <label class="control-label">Địa điểm</label>
+                                    <input type="text" name="Schedules[${scheduleIndex}].Location" class="form-control" placeholder="Ví dụ: Phòng A101" />
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="control-label">Ngày bắt đầu</label>
+                                    <input type="date" name="Schedules[${scheduleIndex}].StartDate" class="form-control" required />
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="control-label">Ngày kết thúc</label>
+                                    <input type="date" name="Schedules[${scheduleIndex}].EndDate" class="form-control" required />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', scheduleHtml);
+            scheduleIndex++;
+            
+            // Re-attach remove buttons
+            attachRemoveHandlers();
+        });
+        
+        function attachRemoveHandlers() {
+            document.querySelectorAll('.remove-schedule-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.closest('.schedule-item').remove();
+                    // Re-index remaining schedules
+                    reindexSchedules();
+                });
+            });
+        }
+        
+        function reindexSchedules() {
+            const schedules = document.querySelectorAll('.schedule-item');
+            schedules.forEach((schedule, index) => {
+                schedule.querySelector('h5').textContent = `Lịch học ${index + 1}`;
+                schedule.querySelectorAll('input, select').forEach(input => {
+                    const name = input.getAttribute('name');
+                    if (name && name.includes('Schedules[')) {
+                        input.setAttribute('name', name.replace(/Schedules\[\d+\]/, `Schedules[${index}]`));
+                    }
+                });
+            });
+            scheduleIndex = schedules.length;
+        }
+        
+        // Initialize remove handlers for existing schedules
+        attachRemoveHandlers();
+        
+        // Set default values for first schedule if empty
+        if (scheduleIndex === 0) {
+            document.getElementById('addScheduleBtn').click();
+        }
+    </script>
+}

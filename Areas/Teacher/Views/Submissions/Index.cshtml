@@ -1,0 +1,353 @@
+@model OnlineClassManagement.Models.SubmissionGradingViewModel
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@using OnlineClassManagement.Models.Enums
+
+@{
+    ViewData["Title"] = "Chấm bài tập";
+    var requestToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+    
+<<<<<<< HEAD
+=======
+    // Báo cho _ClassDashboardNav biết ClassId và ClassName
+>>>>>>> 7b2b1fff74715eededa62566b71cfc8875215347
+    ViewBag.ClassId = Model.AssignmentDetails.ClassId;
+    ViewBag.ClassName = Model.AssignmentDetails.Class.ClassName;
+}
+
+@await Html.PartialAsync("_ClassDashboardNav")
+<h3>Chấm bài: @Model.AssignmentDetails.Title</h3>
+<p>Điểm tối đa: <strong>@Model.AssignmentDetails.MaxScore</strong></p>
+
+<div id="ajax-status-container"></div>
+
+<<<<<<< HEAD
+<div class="d-none d-md-block">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Họ tên SV</th>
+                    <th>Bài nộp</th>
+                    <th>Ngày nộp</th>
+                    <th>Trạng thái</th>
+                    <th>Điểm</th>
+                    <th>Feedback (Phản hồi)</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.StudentSubmissions)
+                {
+                    <tr>
+                        <td>
+                            <strong>@item.StudentName</strong>
+                            <br />
+                            <small class="text-muted">@item.StudentEmail</small>
+                        </td>
+                        
+                        @if (item.Submission != null)
+                        {
+                            <td>
+                                <a href="@item.Submission.FileUrl" target="_blank">
+                                    @item.Submission.OriginalFileName
+                                </a>
+                                <br />
+                                <small class="text-muted">@string.Format("{0:N0}", (item.Submission.FileSize / 1024)) KB</small>
+                            </td>
+                            <td>
+                                @string.Format("{0:dd/MM/yyyy HH:mm}", item.Submission.SubmittedAt)
+                                @if(item.Submission.LateSubmission)
+                                {
+                                    <span class="badge bg-danger">Nộp muộn</span>
+                                }
+                            </td>
+                            <td>
+                                <span class="badge status-text @(item.Submission.Status == SubmissionStatus.Graded ? "bg-success" : "bg-info")">
+                                    @item.Submission.Status
+                                </span>
+                                <br />
+                                <small class="text-muted graded-at-label">
+                                    @(item.Submission.Status == SubmissionStatus.Graded ? string.Format("{0:dd/MM/yyyy}", item.Submission.GradedAt) : "")
+                                </small>
+                            </td>
+                            <td>
+                                <input type="number" 
+                                       class="form-control form-control-sm score-input" 
+                                       value="@item.Submission.Score" 
+                                       min="0" 
+                                       max="@Model.AssignmentDetails.MaxScore" 
+                                       step="0.5" />
+                            </td>
+                            <td>
+                                <textarea class="form-control form-control-sm feedback-input" 
+                                          rows="2">@item.Submission.Feedback</textarea>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary btn-sm btn-save-grade" 
+                                        data-submission-id="@item.Submission.SubmissionId">Lưu</button>
+                            </td>
+                        }
+                        else
+                        {
+                            <td><span class="text-muted">Chưa nộp bài</span></td>
+                            <td><span class="text-muted">-</span></td>
+                            <td><span class="badge bg-secondary">Chưa nộp</span></td>
+                            <td><span class="text-muted">-</span></td>
+                            <td><span class="text-muted">-</span></td>
+                            <td><span class="text-muted">-</span></td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="d-block d-md-none">
+    @foreach (var item in Model.StudentSubmissions)
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                <strong>@item.StudentName</strong>
+                <br />
+                <small class="text-muted">@item.StudentEmail</small>
+            </div>
+            <div class="card-body">
+                @if (item.Submission != null)
+                {
+                    <p class="mb-2"><strong>Bài nộp:</strong> 
+                        <a href="@item.Submission.FileUrl" target="_blank">@item.Submission.OriginalFileName</a> 
+                        (@string.Format("{0:N0}", (item.Submission.FileSize / 1024)) KB)
+                    </p>
+                    <p class="mb-2">
+                        <strong>Ngày nộp:</strong> @string.Format("{0:dd/MM/yyyy HH:mm}", item.Submission.SubmittedAt)
+                        @if(item.Submission.LateSubmission)
+                        {
+                            <span class="badge bg-danger">Nộp muộn</span>
+                        }
+                    </p>
+                    <p class="mb-2">
+                        <strong>Trạng thái:</strong> 
+                        <span class="badge status-text @(item.Submission.Status == SubmissionStatus.Graded ? "bg-success" : "bg-info")">
+                            @item.Submission.Status
+                        </span>
+                        <small class="text-muted graded-at-label">
+                            @(item.Submission.Status == SubmissionStatus.Graded ? string.Format("({0:dd/MM/yyyy})", item.Submission.GradedAt) : "")
+                        </small>
+                    </p>
+                    
+                    <div class="mb-2">
+                        <label class="form-label"><strong>Điểm (trên @Model.AssignmentDetails.MaxScore)</strong></label>
+                        <input type="number" 
+                               class="form-control form-control-sm score-input" 
+                               value="@item.Submission.Score" 
+                               min="0" 
+                               max="@Model.AssignmentDetails.MaxScore" 
+                               step="0.5" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label"><strong>Feedback (Phản hồi)</strong></label>
+                        <textarea class="form-control form-control-sm feedback-input" 
+                                  rows="2">@item.Submission.Feedback</textarea>
+                    </div>
+                    
+                    <button class="btn btn-primary btn-sm btn-save-grade" 
+                            data-submission-id="@item.Submission.SubmissionId">Lưu</button>
+                }
+                else
+                {
+                    <p class="card-text text-muted">Chưa nộp bài</p>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+
+=======
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Họ tên SV</th>
+                <th>Bài nộp</th>
+                <th>Ngày nộp</th>
+                <th>Trạng thái</th>
+                <th>Điểm</th>
+                <th>Feedback (Phản hồi)</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.StudentSubmissions)
+            {
+                <tr>
+                    <td>
+                        <strong>@item.StudentName</strong>
+                        <br />
+                        <small class="text-muted">@item.StudentEmail</small>
+                    </td>
+                    
+                    @if (item.Submission != null)
+                    {
+                        <td>
+                            <a href="@item.Submission.FileUrl" target="_blank">
+                                @item.Submission.OriginalFileName
+                            </a>
+                            <br />
+                            <small class="text-muted">@string.Format("{0:N0}", (item.Submission.FileSize / 1024)) KB</small>
+                        </td>
+                        <td>
+                            @string.Format("{0:dd/MM/yyyy HH:mm}", item.Submission.SubmittedAt)
+                            @if(item.Submission.LateSubmission)
+                            {
+                                <span class="badge bg-danger">Nộp muộn</span>
+                            }
+                        </td>
+                        <td>
+                            <span id="status-text-@item.Submission.SubmissionId" 
+                                  class="badge @(item.Submission.Status == SubmissionStatus.Graded ? "bg-success" : "bg-info")">
+                                @item.Submission.Status
+                            </span>
+                            <br />
+                            <small id="graded-at-@item.Submission.SubmissionId" class="text-muted">
+                                @(item.Submission.Status == SubmissionStatus.Graded ? string.Format("{0:dd/MM/yyyy}", item.Submission.GradedAt) : "")
+                            </small>
+                        </td>
+                        <td>
+                            <input type="number" 
+                                   id="score-@item.Submission.SubmissionId" 
+                                   class="form-control form-control-sm" 
+                                   value="@item.Submission.Score" 
+                                   min="0" 
+                                   max="@Model.AssignmentDetails.MaxScore" 
+                                   step="0.5" />
+                        </td>
+                        <td>
+                            <textarea id="feedback-@item.Submission.SubmissionId" 
+                                      class="form-control form-control-sm" 
+                                      rows="2">@item.Submission.Feedback</textarea>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary btn-sm btn-save-grade" 
+                                    data-submission-id="@item.Submission.SubmissionId">Lưu</button>
+                        </td>
+                    }
+                    else
+                    {
+                        <td><span class="text-muted">Chưa nộp bài</span></td>
+                        <td><span class="text-muted">-</span></td>
+                        <td><span class="badge bg-secondary">Chưa nộp</span></td>
+                        <td><span class="text-muted">-</span></td>
+                        <td><span class="text-muted">-</span></td>
+                        <td><span class="text-muted">-</span></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+>>>>>>> 7b2b1fff74715eededa62566b71cfc8875215347
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const saveButtons = document.querySelectorAll('.btn-save-grade');
+            const statusContainer = document.getElementById('ajax-status-container');
+            
+<<<<<<< HEAD
+=======
+            // === SỬA LỖI: TẠO URL ĐỘNG CÓ BAO GỒM AREA ===
+            // Tạo URL chính xác, trỏ đến /Teacher/Submissions/Grade
+>>>>>>> 7b2b1fff74715eededa62566b71cfc8875215347
+            const gradeUrl = '@Url.Action("Grade", "Submissions", new { area = "Teacher" })';
+
+            function showAlert(message, isSuccess) {
+                statusContainer.innerHTML = ''; 
+                const alertDiv = document.createElement('div');
+                alertDiv.className = `alert ${isSuccess ? 'alert-success' : 'alert-danger'} alert-dismissible fade show`;
+                alertDiv.setAttribute('role', 'alert');
+                
+                alertDiv.innerHTML = `
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                
+                statusContainer.appendChild(alertDiv);
+
+<<<<<<< HEAD
+=======
+                // Tự động ẩn sau 3 giây
+>>>>>>> 7b2b1fff74715eededa62566b71cfc8875215347
+                setTimeout(() => {
+                    alertDiv.classList.remove('show');
+                    alertDiv.classList.add('hide');
+                    setTimeout(() => alertDiv.remove(), 150);
+                }, 3000);
+            }
+
+            saveButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    
+                    const submissionId = this.getAttribute('data-submission-id');
+<<<<<<< HEAD
+                    
+                    // === SỬA JS: Tìm container cha (tr hoặc card) ===
+                    const container = this.closest('tr, .card'); 
+                    if (!container) return; // Không tìm thấy cha
+
+                    // === SỬA JS: Dùng querySelector với class thay vì getElementById ===
+                    const scoreInput = container.querySelector('.score-input');
+                    const feedbackInput = container.querySelector('.feedback-input');
+                    const statusText = container.querySelector('.status-text');
+                    const gradedAtLabel = container.querySelector('.graded-at-label');
+=======
+                    const scoreInput = document.getElementById('score-' + submissionId);
+                    const feedbackInput = document.getElementById('feedback-' + submissionId);
+                    const statusText = document.getElementById('status-text-' + submissionId);
+                    const gradedAtLabel = document.getElementById('graded-at-' + submissionId);
+>>>>>>> 7b2b1fff74715eededa62566b71cfc8875215347
+
+                    const score = scoreInput.value;
+                    const feedback = feedbackInput.value;
+                    button.disabled = true;
+
+<<<<<<< HEAD
+=======
+                    // SỬA LỖI: Dùng biến gradeUrl thay vì URL viết cứng
+>>>>>>> 7b2b1fff74715eededa62566b71cfc8875215347
+                    fetch(gradeUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'RequestVerificationToken': '@requestToken' 
+                        },
+                        body: `submissionId=${submissionId}&score=${score}&feedback=${encodeURIComponent(feedback)}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            showAlert(data.message, true);
+                            statusText.textContent = data.status;
+<<<<<<< HEAD
+                            statusText.className = 'badge bg-success status-text'; // Phải gán lại class
+=======
+                            statusText.className = 'badge bg-success';
+>>>>>>> 7b2b1fff74715eededa62566b71cfc8875215347
+                            gradedAtLabel.textContent = data.gradedAt;
+                        } else {
+                            showAlert(data.message, false);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showAlert('Lỗi mạng. Vui lòng thử lại.', false);
+                    })
+                    .finally(() => {
+                        button.disabled = false;
+                    });
+                });
+            });
+        });
+    </script>
+}

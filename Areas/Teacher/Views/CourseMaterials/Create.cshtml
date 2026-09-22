@@ -1,0 +1,44 @@
+@model OnlineClassManagement.Models.CourseMaterial
+
+@{
+    ViewData["Title"] = "Tải lên tài liệu";
+}
+
+<h1>Tải lên tài liệu</h1>
+<h4>Lớp: @ViewBag.ClassName</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            
+            <input type="hidden" asp-for="ClassId" />
+
+            <div class="form-group mb-3">
+                <label asp-for="Title" class="control-label">Tiêu đề tài liệu</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label asp-for="Description" class="control-label">Mô tả (Tùy chọn)</label>
+                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label class="control-label">Chọn tệp</label>
+                <input type="file" name="file" class="form-control" />
+                <span asp_validation-for="FileUrl" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Tải lên" class="btn btn-primary" />
+                <a asp-action="Index" asp-route-classId="@Model.ClassId" class="btn btn-secondary">Hủy bỏ</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

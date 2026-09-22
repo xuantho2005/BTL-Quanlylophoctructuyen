@@ -1,0 +1,85 @@
+@model OnlineClassManagement.Models.ViewModels.WeeklyScheduleViewModel
+
+@{ 
+    ViewData["Title"] = "Lịch học tuần";
+}
+
+<div class="text-center mb-3">
+    <label for="weekSelector">Chọn tuần:</label>
+    <select id="weekSelector" name="startDate" class="form-control d-inline-block w-auto">
+        @foreach (var week in (List<SelectListItem>)ViewBag.WeeksList)
+        {
+            <option value="@week.Value" selected="@(week.Value == ViewBag.SelectedDate ? "selected" : null)">@week.Text</option>
+        }
+    </select>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('weekSelector').addEventListener('change', function () {
+            var selectedDate = this.value;
+            window.location.href = '@Url.Action("Index", "Schedule")?startDate=' + selectedDate;
+        });
+    </script>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr class="HeaderStyle">
+            <th scope="col">Ca học</th>
+            @for (int i = 0; i < 7; i++)
+            {
+                var date = Model.StartOfWeek.AddDays(i);
+                <th scope="col">@date.ToString("ddd, dd/MM/yyyy")</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="RowStyle">
+            <td align="center" valign="middle" style="width:3%;">Sáng</td>
+            @for (int i = 0; i < 7; i++)
+            {
+                var dayOfWeek = Model.StartOfWeek.AddDays(i).DayOfWeek;
+                <td>
+                    @if (Model.MorningSchedules.ContainsKey(dayOfWeek))
+                    {
+                        foreach (var schedule in Model.MorningSchedules[dayOfWeek])
+                        {
+                            <div class="mb-1">
+                                <strong>@schedule.Class.ClassName</strong><br>
+                                <small>@schedule.StartTime.ToString(@"hh\:mm") - @schedule.EndTime.ToString(@"hh\:mm")</small>
+                                @if (!string.IsNullOrEmpty(schedule.Location))
+                                {
+                                    <br><small class="text-muted">📍 @schedule.Location</small>
+                                }
+                            </div>
+                        }
+                    }
+                </td>
+            }
+        </tr>
+        <tr class="AltRowStyle">
+            <td align="center" valign="middle" style="width:3%;">Chiều</td>
+            @for (int i = 0; i < 7; i++)
+            {
+                var dayOfWeek = Model.StartOfWeek.AddDays(i).DayOfWeek;
+                <td>
+                    @if (Model.AfternoonSchedules.ContainsKey(dayOfWeek))
+                    {
+                        foreach (var schedule in Model.AfternoonSchedules[dayOfWeek])
+                        {
+                            <div class="mb-1">
+                                <strong>@schedule.Class.ClassName</strong><br>
+                                <small>@schedule.StartTime.ToString(@"hh\:mm") - @schedule.EndTime.ToString(@"hh\:mm")</small>
+                                @if (!string.IsNullOrEmpty(schedule.Location))
+                                {
+                                    <br><small class="text-muted">📍 @schedule.Location</small>
+                                }
+                            </div>
+                        }
+                    }
+                </td>
+            }
+        </tr>
+    </tbody>
+</table>

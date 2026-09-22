@@ -1,0 +1,171 @@
+@model OnlineClassManagement.Models.Class
+
+@{
+    ViewData["Title"] = "Chi tiết Lớp học";
+}
+
+<h1>Chi tiết Lớp học</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">ID</dt>
+        <dd class="col-sm-10">@Model.ClassId</dd>
+        
+        <dt class="col-sm-2">Tên lớp</dt>
+        <dd class="col-sm-10">@Model.ClassName</dd>
+        
+        <dt class="col-sm-2">Mã lớp</dt>
+        <dd class="col-sm-10">@Model.ClassCode</dd>
+        
+        <dt class="col-sm-2">Giảng viên</dt>
+        <dd class="col-sm-10">@Model.Teacher.FullName (@Model.Teacher.Email)</dd>
+        
+        <dt class="col-sm-2">Mô tả</dt>
+        <dd class="col-sm-10">@(Model.Description ?? "-")</dd>
+        
+        <dt class="col-sm-2">Học kỳ</dt>
+        <dd class="col-sm-10">@Model.Semester</dd>
+        
+        <dt class="col-sm-2">Năm học</dt>
+        <dd class="col-sm-10">@Model.AcademicYear</dd>
+        
+        <dt class="col-sm-2">Số lượng tối đa</dt>
+        <dd class="col-sm-10">@(Model.MaxStudents?.ToString() ?? "-")</dd>
+        
+        <dt class="col-sm-2">Trạng thái</dt>
+        <dd class="col-sm-10">
+            @if (Model.IsActive)
+            {
+                <span class="badge bg-success">Hoạt động</span>
+            }
+            else
+            {
+                <span class="badge bg-secondary">Vô hiệu hóa</span>
+            }
+        </dd>
+        
+        <dt class="col-sm-2">Ngày tạo</dt>
+        <dd class="col-sm-10">@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</dd>
+        
+        <dt class="col-sm-2">Cập nhật lần cuối</dt>
+        <dd class="col-sm-10">@Model.UpdatedAt.ToString("dd/MM/yyyy HH:mm")</dd>
+    </dl>
+    
+    @if (Model.Enrollments != null && Model.Enrollments.Any())
+    {
+        <h4>Học viên đã đăng ký (@Model.Enrollments.Count)</h4>
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th>Họ tên</th>
+                    <th>Email</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var enrollment in Model.Enrollments)
+                {
+                    <tr>
+                        <td>@enrollment.Student.FullName</td>
+                        <td>@enrollment.Student.Email</td>
+                        <td>
+                            @if (enrollment.Status == OnlineClassManagement.Models.Enums.EnrollmentStatus.Approved)
+                            {
+                                <span class="badge bg-success">Đã duyệt</span>
+                            }
+                            else if (enrollment.Status == OnlineClassManagement.Models.Enums.EnrollmentStatus.Pending)
+                            {
+                                <span class="badge bg-warning">Chờ duyệt</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Từ chối</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    
+    @if (Model.Assignments != null && Model.Assignments.Any())
+    {
+        <h4>Bài tập (@Model.Assignments.Count)</h4>
+        <ul>
+            @foreach (var assignment in Model.Assignments)
+            {
+                <li>@assignment.Title - @assignment.DueDate.ToString("dd/MM/yyyy")</li>
+            }
+        </ul>
+    }
+    
+    @if (Model.Materials != null && Model.Materials.Any())
+    {
+        <h4>Tài liệu (@Model.Materials.Count)</h4>
+        <ul>
+            @foreach (var material in Model.Materials)
+            {
+                <li>@material.Title</li>
+            }
+        </ul>
+    }
+    
+    @if (Model.Schedules != null && Model.Schedules.Any())
+    {
+        <h4>Lịch học (@Model.Schedules.Count)</h4>
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th>Thứ trong tuần</th>
+                    <th>Giờ học</th>
+                    <th>Ngày bắt đầu</th>
+                    <th>Ngày kết thúc</th>
+                    <th>Địa điểm</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var schedule in Model.Schedules)
+            {
+                    <tr>
+                        <td>
+                            @switch (schedule.DayOfWeek)
+                            {
+                                case DayOfWeek.Monday:
+                                    <text>Thứ Hai</text>
+                                    break;
+                                case DayOfWeek.Tuesday:
+                                    <text>Thứ Ba</text>
+                                    break;
+                                case DayOfWeek.Wednesday:
+                                    <text>Thứ Tư</text>
+                                    break;
+                                case DayOfWeek.Thursday:
+                                    <text>Thứ Năm</text>
+                                    break;
+                                case DayOfWeek.Friday:
+                                    <text>Thứ Sáu</text>
+                                    break;
+                                case DayOfWeek.Saturday:
+                                    <text>Thứ Bảy</text>
+                                    break;
+                                case DayOfWeek.Sunday:
+                                    <text>Chủ Nhật</text>
+                                    break;
+                            }
+                        </td>
+                        <td>@schedule.StartTime.ToString(@"hh\:mm") - @schedule.EndTime.ToString(@"hh\:mm")</td>
+                        <td>@schedule.StartDate.ToString("dd/MM/yyyy")</td>
+                        <td>@schedule.EndDate.ToString("dd/MM/yyyy")</td>
+                        <td>@(schedule.Location ?? "-")</td>
+                    </tr>
+            }
+            </tbody>
+        </table>
+    }
+</div>
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</div>
+

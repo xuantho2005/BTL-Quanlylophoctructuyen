@@ -1,0 +1,56 @@
+@model IEnumerable<OnlineClassManagement.Models.Class>
+
+@{
+    ViewData["Title"] = "Lớp học của tôi";
+}
+
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @ViewBag.SuccessMessage
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @ViewBag.ErrorMessage
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<h1>Lớp học của tôi</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Tạo lớp học mới</a>
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Tên lớp</th>
+            <th>Mã lớp</th>
+            <th>Học kỳ</th>
+            <th>Năm học</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th> </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.ClassName)</td>
+            <td>@Html.DisplayFor(modelItem => item.ClassCode)</td>
+            <td>@Html.DisplayFor(modelItem => item.Semester)</td>
+            <td>@Html.DisplayFor(modelItem => item.AcademicYear)</td>
+            <td>
+                @(item.IsActive ? "Hoạt động" : "Ẩn")
+            </td>
+            
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ClassId" class="btn btn-sm btn-outline-primary">Sửa</a>
+                <a asp-action="Details" asp-route-id="@item.ClassId" class="btn btn-sm btn-outline-info">Chi tiết</a>
+                <a asp-action="Delete" asp-route-id="@item.ClassId" class="btn btn-sm btn-outline-danger">Xóa</a>
+            </td>
+            </tr>
+}
+    </tbody>
+</table>
